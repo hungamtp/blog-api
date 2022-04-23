@@ -1,0 +1,1115 @@
+create table roles
+(
+    id   number not null,
+    name varchar2(20 char),
+    primary key (id)
+);
+create table users
+(
+    id              number not null,
+    username        varchar2(255 char),
+    password        varchar2(255 char),
+    firstName       varchar2(255 char),
+    lastName        varchar2(255 char),
+    email           varchar2(255 char),
+    gender          varchar2(255 char),
+    isVerifiedEmail number(1, 0),
+    isActivate      number(1, 0),
+    dateOfBirth     timestamp,
+    roleId          number,
+    foreign key (roleId) references roles (id),
+    primary key (id)
+);
+create table post
+(
+    id        number not null,
+    title     varchar2(255 char),
+    content   varchar2(255 char),
+    createdAt timestamp,
+    editedAt  timestamp,
+    publish   number(1, 0),
+    isSlide   number(1, 0),
+    primary key (id)
+);
+
+create table comment
+(
+    id      number not null,
+    content varchar2(255 char),
+    rate    number(5, 1),
+    post_id number not null,
+    primary key (id),
+    foreign key (post_id) references post (id)
+);
+
+
+ALTER TABLE comment
+    ADD FOREIGN KEY (post_id)
+        REFERENCES post (id);
+
+ALTER TABLE users
+    ADD FOREIGN KEY (roleId)
+        REFERENCES roles (id);
+
+CREATE SEQUENCE HIBERNATE_SEQUENCE START WITH 1 INCREMENT BY 1;
+--
+-- create table ADDITIONAL_TALLY_EXPORT (
+--                                          ID varchar2(32 char) not null,
+--                                          ADDITIONAL_TALLY_EXPORT blob,
+--                                          ATE_SIGNATURE blob,
+--                                          CREATION_TIMESTAMP timestamp,
+--                                          TALLY_OUTPUT_ID varchar2(32 char),
+--                                          primary key (ID)
+-- );
+--
+-- create table ADVANCED_CERTIFICATES (
+--                                        ID varchar2(32 char) not null,
+--                                        ACTIVE number(1,0),
+--                                        AVAILABLE number(1,0),
+--                                        PKCS12 blob,
+--                                        REVOCATION_DATE timestamp,
+--                                        SERIAL varchar2(255 char),
+--                                        X509_CERTIFICATE blob,
+--                                        primary key (ID)
+-- );
+--
+-- create table ANSWERS (
+--                          ID varchar2(32 char) not null,
+--                          ADDITIONAL_IMAGE blob,
+--                          ADDITIONAL_IMAGE_TYPE varchar2(255 char),
+--                          ALIAS varchar2(255 char),
+--                          AUDIO blob,
+--                          AUDIO_TYPE varchar2(255 char),
+--                          BLANK number(1,0),
+--                          EMAIL varchar2(30 char),
+--                          IMAGE blob,
+--                          IMAGE_TYPE varchar2(255 char),
+--                          NULLER number(1,0),
+--                          QUESTION_ID varchar2(255 char),
+--                          STATUS number(10,0),
+--                          STYLE_NAME varchar2(255 char),
+--                          ANSWER_ID varchar2(32 char),
+--                          TEXT_ID varchar2(32 char) unique,
+--                          ORDER_IN_ANSWER number(10,0),
+--                          ORDER_IN_QUESTION number(10,0),
+--                          primary key (ID)
+-- );
+--
+-- create table API_KEYS (
+--                           ID varchar2(32 char) not null,
+--                           VOTING_CHANNEL varchar2(255 char),
+--                           KEY varchar2(255 char),
+--                           VOTING_MODE varchar2(255 char),
+--                           primary key (ID),
+--                           unique (KEY),
+--                           unique (VOTING_CHANNEL, VOTING_MODE)
+-- );
+--
+-- create table ARBITRARY_STRINGS (
+--                                    ID varchar2(32 char) not null,
+--                                    LOCALE_NAME varchar2(255 char),
+--                                    NORMALIZED_VALUE varchar2(4000 char),
+--                                    ARBITRARY_VALUE varchar2(4000 char),
+--                                    MESSAGE_ID varchar2(32 char),
+--                                    INDEX_COL number(10,0),
+--                                    primary key (ID)
+-- );
+--
+-- create table AREAS (
+--                        ID varchar2(32 char) not null,
+--                        ACTIVE number(1,0),
+--                        ALIAS varchar2(255 char),
+--                        INSTITUTION_ID varchar2(32 char) not null,
+--                        NAME_ID varchar2(32 char) unique,
+--                        primary key (ID),
+--                        unique (ALIAS, INSTITUTION_ID)
+-- );
+--
+-- create table AUDITABLE_OUTPUT (
+--                                   ID varchar2(32 char) not null,
+--                                   AUDITABLE_OUTPUT blob,
+--                                   AUDITABLE_OUTPUT_SIGNATURE blob,
+--                                   CREATION_TIMESTAMP timestamp,
+--                                   TYPE varchar2(10 char),
+--                                   ELECTION_ID varchar2(32 char),
+--                                   MIXING_ID varchar2(32 char),
+--                                   primary key (ID)
+-- );
+--
+-- create table AUTHORIZED_ELECTION_VOTERS (
+--                                             VOTER_ID varchar2(32 char),
+--                                             ELECTION_ID varchar2(32 char),
+--                                             primary key (VOTER_ID, ELECTION_ID)
+-- );
+--
+-- create table CLEAR_TEXT_OUTPUT (
+--                                    ID varchar2(32 char) not null,
+--                                    CLEAR_TEXT_OUTPUT blob,
+--                                    CLEAR_TEXT_OUTPUT_SIGNATURE blob,
+--                                    CREATION_TIMESTAMP timestamp,
+--                                    ELECTION_ID varchar2(32 char),
+--                                    MIXING_ID varchar2(32 char),
+--                                    primary key (ID)
+-- );
+--
+-- create table CLEAR_TEXT_PARSED_OUTPUT (
+--                                           ID varchar2(32 char) not null,
+--                                           CLEAR_TEXT_OUTPUT blob,
+--                                           CLEAR_TEXT_OUTPUT_SIGNATURE blob,
+--                                           CREATION_TIMESTAMP timestamp,
+--                                           LOCALE_NAME varchar2(10 char),
+--                                           ELECTION_ID varchar2(32 char),
+--                                           MIXING_ID varchar2(32 char),
+--                                           primary key (ID)
+-- );
+--
+-- create table ELECTIONS (
+--                            ID varchar2(32 char) not null,
+--                            ALIAS varchar2(255 char),
+--                            ALLOWED_VOTES number(10,0),
+--                            ARCHIVED number(1,0),
+--                            CANDIDATES_AUDIOS_ENABLED number(1,0),
+--                            CHAIN_OBLIGATORY number(1,0),
+--                            CREATION_DATE timestamp,
+--                            ELECTION_EVENT_ID varchar2(255 char),
+--                            TYPE varchar2(255 char),
+--                            CLOSE_DATE timestamp,
+--                            END_DATE_TEST_MODE timestamp,
+--                            IMAGE blob,
+--                            IMAGE_TYPE varchar2(255 char),
+--                            INSTITUTION_ID varchar2(255 char),
+--                            LAST_STATUS_UPDATE timestamp,
+--                            LAST_UPDATE timestamp,
+--                            ORDER_IN_ELECTION_EVENT number(10,0),
+--                            PRINT_BALLOT number(1,0),
+--                            RECEIPT_PUBLISHED number(1,0),
+--                            REDIRECT_EXIT_URL varchar2(255 char),
+--                            REDIRECT_HELP_URL varchar2(255 char),
+--                            REPORT_ALL_RECEIPTS number(1,0),
+--                            SHOW_RECEIPT number(1,0),
+--                            SHOW_VERIFICATION number(1,0),
+--                            START_DATE timestamp,
+--                            START_DATE_TEST_MODE timestamp,
+--                            STATUS number(10,0),
+--                            suspended number(1,0),
+--                            URL varchar2(255 char),
+--                            ALT_RCPT_ID varchar2(32 char) unique,
+--                            NEXT_ELECTION_ID varchar2(32 char),
+--                            SUSPENDED_MSG_ID varchar2(32 char) unique,
+--                            TITLE_ID varchar2(32 char) not null unique,
+--                            URL_LABEL_ID varchar2(32 char) not null unique,
+--                            primary key (ID),
+--                            unique (ALIAS, INSTITUTION_ID)
+-- );
+--
+-- create table ELECTION_EVENTS (
+--                                  ID varchar2(32 char) not null,
+--                                  ADMIN_BOARD_PKCS12 blob,
+--                                  ADMIN_BOARD_X509 blob,
+--                                  ALIAS varchar2(255 char),
+--                                  ARCHIVED number(1,0),
+--                                  CERTIFCIATES_MODEL varchar2(255 char),
+--                                  DEFAULT_END_DATE timestamp,
+--                                  DEFAULT_START_DATE timestamp,
+--                                  ELECT_BOARD_PKCS12 blob,
+--                                  ELECT_BOARD_X509 blob,
+--                                  INSTITUTION_ID varchar2(255 char),
+--                                  ELECTION_PKCS12 blob,
+--                                  SECURITY_MODEL varchar2(255 char),
+--                                  ELECTION_X509 blob,
+--                                  NAME_ID varchar2(32 char) not null unique,
+--                                  SUSPENDED_MSG_DEF_ID varchar2(32 char) unique,
+--                                  WELCOME_ID varchar2(32 char) not null unique,
+--                                  primary key (ID),
+--                                  unique (ALIAS, INSTITUTION_ID)
+-- );
+--
+-- create table ELECTION_EVENT_LOCALES (
+--                                         ELECTION_EVENT_ID varchar2(32 char) not null,
+--                                         LOCALE_NAME varchar2(255 char)
+-- );
+--
+-- create table ELECTION_EVENT_PUBLISH (
+--                                         ID varchar2(32 char) not null,
+--                                         ELECTION_EVENT_CERTIFICATES blob,
+--                                         ELECTION_SIGNATURE blob,
+--                                         ELECTION_ZIP blob,
+--                                         PUBLISH_TIMESTAMP timestamp,
+--                                         ELECTION_ID varchar2(32 char) not null,
+--                                         ELECTION_EVENT_ID varchar2(32 char) not null,
+--                                         primary key (ID)
+-- );
+--
+-- create table ELECTION_LOCALES (
+--                                   ELECTION_ID varchar2(32 char) not null,
+--                                   LOCALE_NAME varchar2(255 char)
+-- );
+--
+-- create table ELECTION_PUBLISH_STATUS (
+--                                          ID varchar2(32 char) not null,
+--                                          ELECTION_ID varchar2(32 char) not null,
+--                                          HOSTNAME varchar2(255 char) not null,
+--                                          JMS_TIMESTAMP timestamp,
+--                                          SERVER_TIMESTAMP timestamp,
+--                                          primary key (ID),
+--                                          unique (HOSTNAME, ELECTION_ID)
+-- );
+--
+-- create table H_ELECTION_EVENT (
+--                                   H_ELECT_BOARD_PKCS12 blob,
+--                                   H_ELECT_BOARD_X509 blob,
+--                                   ID varchar2(32 char) not null,
+--                                   primary key (ID)
+-- );
+--
+-- create table IMPORT_VOTER_HISTORY (
+--                                       ID varchar2(32 char) not null,
+--                                       DELETE_AUTHORIZATIION number(1,0),
+--                                       ERROR_MSG varchar2(255 char),
+--                                       IMPORT_DATE timestamp,
+--                                       IMPORTED_FILENAME varchar2(255 char),
+--                                       FILE_HASH varchar2(255 char),
+--                                       FILE_SIGNED number(1,0),
+--                                       LOGIN_TYPE varchar2(10 char),
+--                                       NUMBER_CREDENTIALS_IMPORTED number(19,0),
+--                                       NUMBER_CREDENTIALS_TOTAL number(19,0),
+--                                       SKIP_ACTIVATION number(1,0),
+--                                       SKIP_AUTHORIZATIION number(1,0),
+--                                       STATUS varchar2(255 char),
+--                                       ELECTION_ID varchar2(32 char),
+--                                       ELECTION_EVENT_ID varchar2(32 char),
+--                                       INSTITUTION_ID varchar2(32 char),
+--                                       USER_ID varchar2(32 char),
+--                                       primary key (ID)
+-- );
+--
+-- create table INSTITUTIONS (
+--                               ID varchar2(32 char) not null,
+--                               ACTIVE number(1,0),
+--                               ALIAS varchar2(255 char) unique,
+--                               CREDENTIALS_DELIVERY_URL varchar2(255 char),
+--                               DOMAIN_JS_URL varchar2(255 char),
+--                               DOMAIN_URL varchar2(255 char),
+--                               IMAGE blob,
+--                               IMAGE_TYPE varchar2(255 char),
+--                               LOGO_PATH varchar2(255 char),
+--                               MOBILE_IMAGE blob,
+--                               MOBILE_IMAGE_TYPE varchar2(255 char),
+--                               MOBILE_LOGO_PATH varchar2(255 char),
+--                               NAME varchar2(255 char),
+--                               INSTITUTION_PKCS12 blob,
+--                               JVC_STYLE_SHEET clob,
+--                               JVC_STYLE_SHEET_COLORS varchar2(2000 char),
+--                               INSTITUTION_X509 blob,
+--                               FOOTER_ID varchar2(32 char) unique,
+--                               WELCOME_ID varchar2(32 char) not null unique,
+--                               primary key (ID)
+-- );
+--
+-- create table INSTITUTION_LOCALES (
+--                                      INSTITUTION_ID varchar2(32 char) not null,
+--                                      LOCALE_NAME varchar2(255 char)
+-- );
+--
+-- create table LIST_ANSWERS (
+--                               ALIAS varchar2(255 char),
+--                               LIST_TYPE varchar2(255 char),
+--                               MAX_LIST_OPTIONS number(10,0),
+--                               MIN_LIST_OPTIONS number(10,0),
+--                               SUB_TYPE varchar2(255 char),
+--                               ID varchar2(32 char) not null,
+--                               primary key (ID)
+-- );
+--
+-- create table LOGIN_CONFIGURATION (
+--                                      ID varchar2(32 char) not null,
+--                                      fields_number number(10,0),
+--                                      username_lenght number(10,0),
+--                                      INSTITUTION_ID varchar2(32 char) not null unique,
+--                                      PASSWORD_ID varchar2(32 char) unique,
+--                                      PIN_ID varchar2(32 char) unique,
+--                                      USERNAME_ID varchar2(32 char) unique,
+--                                      primary key (ID)
+-- );
+--
+-- create table MESSAGES (
+--                           ID varchar2(32 char) not null,
+--                           REFERENCE varchar2(512 char),
+--                           primary key (ID)
+-- );
+--
+-- create table MIXINGS (
+--                          ID varchar2(32 char) not null,
+--                          GENERATION_DATE timestamp,
+--                          VOTING_MODE varchar2(255 char),
+--                          NUM_AUDITABLE_MESSAGES number(19,0),
+--                          STATUS varchar2(255 char),
+--                          TOTAL_VOTERS number(19,0),
+--                          TYPE varchar2(255 char),
+--                          ELECTION_ID varchar2(32 char),
+--                          OPERATIONAL_EVENT_ID varchar2(32 char),
+--                          primary key (ID)
+-- );
+--
+-- create table OPERATIONAL_EVENTS (
+--                                     ID varchar2(32 char) not null,
+--                                     ACTION number(10,0) not null,
+--                                     CREATION_TIMESTAMP raw(255) not null,
+--                                     SIGNATURE_FILE blob not null,
+--                                     TEXT_FILE blob not null,
+--                                     ELECTION_EVENT_ID varchar2(32 char) not null,
+--                                     primary key (ID)
+-- );
+--
+-- create table PERMISSIONS (
+--                              ID varchar2(32 char) not null,
+--                              NAME varchar2(255 char),
+--                              primary key (ID),
+--                              unique (NAME)
+-- );
+--
+-- create table QUESTIONS (
+--                            QUESTION_TYPE varchar2(30 char) not null,
+--                            ID varchar2(32 char) not null,
+--                            ALIAS varchar2(255 char),
+--                            IMAGE blob,
+--                            IMAGE_TYPE varchar2(255 char),
+--                            LISTS_HEADER_HEIGHT number(10,0),
+--                            LISTS_HEIGHT number(10,0),
+--                            LISTS_WIDTH number(10,0),
+--                            MODEL_VALIDATION_QUESTION_TYPE varchar2(255 char),
+--                            ORDER_IN_ELECTION number(10,0),
+--                            ORDER_IN_PAGE number(10,0),
+--                            PAGE number(10,0),
+--                            PAGE_BREAK number(1,0),
+--                            STATUS number(10,0),
+--                            STYLE_NAME varchar2(255 char),
+--                            VIEW_TYPE varchar2(255 char),
+--                            acclamated number(1,0),
+--                            ANSWER_ORDER_TYPE varchar2(255 char),
+--                            COUNTER number(1,0),
+--                            CUMULATIVE_POINTS number(10,0),
+--                            MAX_ANSWERS number(10,0),
+--                            MIN_ANSWERS number(10,0),
+--                            OVER_VOTE_TYPE varchar2(255 char),
+--                            PREFERENTIAL number(1,0),
+--                            UNDER_VOTE_WARNING number(1,0),
+--                            UNDER_VOTE_TYPE varchar2(255 char),
+--                            ADDITIONAL_INFORMATION_ID varchar2(32 char) unique,
+--                            CUSTOM_BLANK_VOTE_MESSAGE_ID varchar2(32 char) unique,
+--                            DESCRIPTION_ID varchar2(32 char) unique,
+--                            ELECTION_ID varchar2(32 char),
+--                            TEXT_ID varchar2(32 char) unique,
+--                            TITLE_ID varchar2(32 char) unique,
+--                            ACCLAMATIONTEXT_ID varchar2(32 char) unique,
+--                            primary key (ID)
+-- );
+--
+-- create table QUESTIONS_AREAS (
+--                                  QUESTION_ID varchar2(32 char) not null,
+--                                  AREA_ID varchar2(32 char) not null,
+--                                  primary key (QUESTION_ID, AREA_ID)
+-- );
+--
+-- create table RECEIPT_OUTPUT (
+--                                 ID varchar2(32 char) not null,
+--                                 CREATION_TIMESTAMP timestamp,
+--                                 RECEIPT_OUTPUT blob,
+--                                 RECEIPT_OUTPUT_SIGNATURE blob,
+--                                 ELECTION_ID varchar2(32 char),
+--                                 MIXING_ID varchar2(32 char),
+--                                 primary key (ID)
+-- );
+--
+-- create table ROLES (
+--                        ID varchar2(64 char) not null,
+--                        primary key (ID)
+-- );
+--
+-- create table ROLES_PERMISSIONS (
+--                                    ROLE_ID varchar2(64 char) not null,
+--                                    PERMISSION_ID varchar2(32 char) not null,
+--                                    unique (PERMISSION_ID, ROLE_ID)
+-- );
+--
+-- create table SECURE_MESSAGES (
+--                                  ID number(19,0) not null,
+--                                  CHANNEL varchar2(32 char),
+--                                  CREATION_DATE timestamp,
+--                                  INCORRECT_CAST number(1,0),
+--                                  RECEIPT_MESSAGE_XML varchar2(2000 char),
+--                                  SECURE_MESSAGE_XML clob,
+--                                  TIMES_RECOVERED number(10,0),
+--                                  ELECTION_ID varchar2(32 char) not null,
+--                                  VOTER_ID varchar2(32 char),
+--                                  primary key (ID)
+-- );
+--
+-- create table TALLY_OUTPUT (
+--                               ID varchar2(32 char) not null,
+--                               CREATION_TIMESTAMP timestamp,
+--                               LOCALE_NAME varchar2(10 char),
+--                               TALLY_OUTPUT blob,
+--                               TALLY_OUTPUT_SIGNATURE blob,
+--                               ELECTION_ID varchar2(32 char),
+--                               MIXING_ID varchar2(32 char),
+--                               primary key (ID)
+-- );
+--
+-- create table TALLY_OUTPUT_JSON (
+--                                    ID varchar2(32 char) not null,
+--                                    CREATION_TIMESTAMP timestamp,
+--                                    LOCALE_NAME varchar2(10 char),
+--                                    TALLY_OUTPUT_JSON blob,
+--                                    TALLY_OUTPUT_JSON_SIGNATURE blob,
+--                                    ELECTION_ID varchar2(32 char),
+--                                    MIXING_ID varchar2(32 char),
+--                                    primary key (ID)
+-- );
+--
+-- create table TALLY_OUTPUT_REPORT (
+--                                      ID varchar2(32 char) not null,
+--                                      CREATION_TIMESTAMP timestamp,
+--                                      TALLY_OUTPUT_REPORT blob,
+--                                      TALLY_OUTPUT_REPORT_SIGNATURE blob,
+--                                      TYPE varchar2(20 char),
+--                                      TALLY_OUTPUT_ID varchar2(32 char),
+--                                      primary key (ID)
+-- );
+--
+-- create table TEXT_ANSWERS (
+--                               ADDRESS varchar2(255 char),
+--                               DATE_OF_BIRTH timestamp,
+--                               GENDER varchar2(255 char),
+--                               PROFESSION varchar2(255 char),
+--                               ID varchar2(32 char) not null,
+--                               PROFILE_TEXT_ID varchar2(32 char) unique,
+--                               primary key (ID)
+-- );
+--
+-- create table UNAUTHORIZED_ELECTION_VOTERS (
+--                                               CAUSE varchar2(255 char),
+--                                               MORE_INFO varchar2(1024 char),
+--                                               TIMESTAMP timestamp,
+--                                               VOTER_ID varchar2(32 char),
+--                                               ELECTION_ID varchar2(32 char),
+--                                               primary key (ELECTION_ID, VOTER_ID)
+-- );
+--
+-- create table USERS (
+--                        ID varchar2(32 char) not null,
+--                        ACTIVE number(1,0),
+--                        LOGIN varchar2(255 char),
+--                        PASSWORD varchar2(255 char),
+--                        transformed_login varchar2(255 char),
+--                        ROLE varchar2(255 char),
+--                        CERTIFICATE_ID varchar2(32 char),
+--                        ELECTION_ID varchar2(32 char),
+--                        ELECTION_EVENT_ID varchar2(32 char),
+--                        INSTITUTION_ID varchar2(32 char),
+--                        primary key (ID),
+--                        unique (LOGIN),
+--                        unique (transformed_login)
+-- );
+--
+-- create table USER_LOGIN_ATTEMPTS (
+--                                      ID varchar2(32 char) not null,
+--                                      failCount number(10,0) not null,
+--                                      failDate timestamp,
+--                                      VOTER_ID varchar2(32 char),
+--                                      primary key (ID),
+--                                      unique (VOTER_ID)
+-- );
+--
+-- create table VM_ELECTION_EVENT (
+--                                    VM_ELECT_BOARD_PKCS12 blob,
+--                                    VM_ELECT_BOARD_X509 blob,
+--                                    ID varchar2(32 char) not null,
+--                                    primary key (ID)
+-- );
+--
+-- create table VOTERS (
+--                         ID varchar2(32 char) not null,
+--                         ACTIVE number(1,0),
+--                         LOGIN varchar2(255 char),
+--                         PASSWORD varchar2(255 char),
+--                         transformed_login varchar2(255 char),
+--                         ADDITIONAL_INFO varchar2(255 char),
+--                         INSTITUTION_ID varchar2(32 char),
+--                         LOGIN_CIPHER varchar2(255 char),
+--                         NAME varchar2(250 char),
+--                         NAME_CIPHER varchar2(255 char),
+--                         SALT varchar2(44 char),
+--                         WEIGHT double precision,
+--                         CERTIFICATE_ID varchar2(32 char),
+--                         API_KEY_ID varchar2(32 char),
+--                         AREA_ID varchar2(32 char),
+--                         primary key (ID),
+--                         unique (LOGIN, INSTITUTION_ID),
+--                         unique (transformed_login, INSTITUTION_ID)
+-- );
+--
+-- create table VOTERS_TOKENS (
+--                                ID varchar2(32 char) not null,
+--                                EXPIRATION_TIME number(19,0),
+--                                HASH_TOKEN varchar2(255 char) unique,
+--                                VOTER_ID varchar2(32 char),
+--                                USED number(1,0),
+--                                primary key (ID)
+-- );
+--
+-- create table WRITE_INS_OUTPUT (
+--                                   ID varchar2(32 char) not null,
+--                                   CREATION_TIMESTAMP timestamp,
+--                                   WRITE_INS_OUTPUT blob,
+--                                   WRITE_INS_OUTPUT_SIGNATURE blob,
+--                                   ELECTION_ID varchar2(32 char),
+--                                   MIXING_ID varchar2(32 char),
+--                                   primary key (ID)
+-- );
+--
+-- create table WRITE_IN_ANSWERS (
+--                                   MAX_WRITE_IN number(10,0),
+--                                   MIN_WRITE_IN number(10,0),
+--                                   NUMBER_OF_LINES number(10,0),
+--                                   VIEW_TYPE varchar2(255 char),
+--                                   ID varchar2(32 char) not null,
+--                                   primary key (ID)
+-- );
+--
+-- create index ATE_REPORT_TO on ADDITIONAL_TALLY_EXPORT (TALLY_OUTPUT_ID);
+--
+-- alter table ADDITIONAL_TALLY_EXPORT
+--     add constraint ATE_REPORT_TO_FK
+--         foreign key (TALLY_OUTPUT_ID)
+--             references TALLY_OUTPUT
+--             on delete cascade;
+--
+-- create index ANSWERS_ANWERS on ANSWERS (ANSWER_ID);
+--
+-- create index ANSWERS_QUESTION_INDEX on ANSWERS (QUESTION_ID);
+--
+-- alter table ANSWERS
+--     add constraint ANSWER_TEXT_FK
+--         foreign key (TEXT_ID)
+--             references MESSAGES;
+--
+-- alter table ANSWERS
+--     add constraint FKF8494455EC3E4C01
+--         foreign key (ANSWER_ID)
+--             references ANSWERS;
+--
+-- alter table ANSWERS
+--     add constraint ANSWER_ID_FK
+--         foreign key (ANSWER_ID)
+--             references LIST_ANSWERS;
+--
+-- alter table ANSWERS
+--     add constraint QUESTION_ANSWER_FK
+--         foreign key (QUESTION_ID)
+--             references QUESTIONS;
+--
+-- create index ARBITRARY_STRINGS_MESSAGE on ARBITRARY_STRINGS (MESSAGE_ID);
+--
+-- alter table ARBITRARY_STRINGS
+--     add constraint MESSAGE_ARBITRARY_STRING_FK
+--         foreign key (MESSAGE_ID)
+--             references MESSAGES;
+--
+-- alter table AREAS
+--     add constraint AREA_NAME_FK
+--         foreign key (NAME_ID)
+--             references MESSAGES;
+--
+-- alter table AREAS
+--     add constraint AREA_INSTITUTION_FK
+--         foreign key (INSTITUTION_ID)
+--             references INSTITUTIONS;
+--
+-- create index AUDITABLE_OUTPUT_MIXING on AUDITABLE_OUTPUT (MIXING_ID);
+--
+-- create index AUDITABLE_OUTPUT_ELECTION on AUDITABLE_OUTPUT (ELECTION_ID);
+--
+-- alter table AUDITABLE_OUTPUT
+--     add constraint AUDITABLE_OUTPUT_MIXING_FK
+--         foreign key (MIXING_ID)
+--             references MIXINGS
+--             on delete cascade;
+--
+-- alter table AUDITABLE_OUTPUT
+--     add constraint AUDITABLE_OUTPUT_ELECTION_FK
+--         foreign key (ELECTION_ID)
+--             references ELECTIONS
+--             on delete cascade;
+--
+-- create index AEV_ELECTION_INDEX on AUTHORIZED_ELECTION_VOTERS (ELECTION_ID);
+--
+-- create index AEV_VOTER_INDEX on AUTHORIZED_ELECTION_VOTERS (VOTER_ID);
+--
+-- alter table AUTHORIZED_ELECTION_VOTERS
+--     add constraint AUTHORIZATION_EV_VOTER_FK
+--         foreign key (VOTER_ID)
+--             references VOTERS;
+--
+-- alter table AUTHORIZED_ELECTION_VOTERS
+--     add constraint AEV_ELECTION_ID_FK
+--         foreign key (ELECTION_ID)
+--             references ELECTIONS;
+--
+-- create index CLEAR_TEXT_OUTPUT_MIXING on CLEAR_TEXT_OUTPUT (MIXING_ID);
+--
+-- create index CLEAR_TEXT_OUTPUT_ELECTION on CLEAR_TEXT_OUTPUT (ELECTION_ID);
+--
+-- alter table CLEAR_TEXT_OUTPUT
+--     add constraint CLEAR_TEXT_OUTPUT_MIXING_FK
+--         foreign key (MIXING_ID)
+--             references MIXINGS
+--             on delete cascade;
+--
+-- alter table CLEAR_TEXT_OUTPUT
+--     add constraint CLEAR_TEXT_OUTPUT_ELECTION_FK
+--         foreign key (ELECTION_ID)
+--             references ELECTIONS
+--             on delete cascade;
+--
+-- create index CTPO_MIXING on CLEAR_TEXT_PARSED_OUTPUT (MIXING_ID);
+--
+-- create index CTPO_TEXT_OUTPUT_ELECTION on CLEAR_TEXT_PARSED_OUTPUT (ELECTION_ID);
+--
+-- alter table CLEAR_TEXT_PARSED_OUTPUT
+--     add constraint CTPO_MIXING_FK
+--         foreign key (MIXING_ID)
+--             references MIXINGS
+--             on delete cascade;
+--
+-- alter table CLEAR_TEXT_PARSED_OUTPUT
+--     add constraint CTPO_ELECTION_FK
+--         foreign key (ELECTION_ID)
+--             references ELECTIONS
+--             on delete cascade;
+--
+-- create index ELECTION_INSTITUTION_INDEX on ELECTIONS (INSTITUTION_ID);
+--
+-- create index ELECTION_EE_INDEX on ELECTIONS (ELECTION_EVENT_ID);
+--
+-- create index ELECTION_ALIAS_INDEX on ELECTIONS (ALIAS);
+--
+-- alter table ELECTIONS
+--     add constraint ELECTION_ALTERNATE_RECEIPT_FK
+--         foreign key (ALT_RCPT_ID)
+--             references MESSAGES;
+--
+-- alter table ELECTIONS
+--     add constraint FK_EL_SUSPENDED_MSG
+--         foreign key (SUSPENDED_MSG_ID)
+--             references MESSAGES;
+--
+-- alter table ELECTIONS
+--     add constraint ELECTION_EVENT_FK
+--         foreign key (ELECTION_EVENT_ID)
+--             references ELECTION_EVENTS;
+--
+-- alter table ELECTIONS
+--     add constraint ELECTION_URL_FK
+--         foreign key (URL_LABEL_ID)
+--             references MESSAGES;
+--
+-- alter table ELECTIONS
+--     add constraint ELECTION_TITLE_FK
+--         foreign key (TITLE_ID)
+--             references MESSAGES;
+--
+-- alter table ELECTIONS
+--     add constraint ELECTION_ELECTION_FK
+--         foreign key (NEXT_ELECTION_ID)
+--             references ELECTIONS;
+--
+-- alter table ELECTIONS
+--     add constraint ELECTION_INSTITUTION_FK
+--         foreign key (INSTITUTION_ID)
+--             references INSTITUTIONS;
+--
+-- create index EE_INSTITUTION_INDEX on ELECTION_EVENTS (INSTITUTION_ID);
+--
+-- alter table ELECTION_EVENTS
+--     add constraint FK_EE_SUSPENDED_ELECT_DEF_MSG
+--         foreign key (SUSPENDED_MSG_DEF_ID)
+--             references MESSAGES;
+--
+-- alter table ELECTION_EVENTS
+--     add constraint ELECTION_EVENT_WELCOME_FK
+--         foreign key (WELCOME_ID)
+--             references MESSAGES;
+--
+-- alter table ELECTION_EVENTS
+--     add constraint ELECTION_EVENT_NAME_FK
+--         foreign key (NAME_ID)
+--             references MESSAGES;
+--
+-- alter table ELECTION_EVENTS
+--     add constraint ELECTION_EVENT_INSTITUTION_FK
+--         foreign key (INSTITUTION_ID)
+--             references INSTITUTIONS;
+--
+-- alter table ELECTION_EVENT_LOCALES
+--     add constraint FK712306CEB0C87F60
+--         foreign key (ELECTION_EVENT_ID)
+--             references ELECTION_EVENTS;
+--
+-- create index EEP_ELECTION_PUBLISH_INDEX on ELECTION_EVENT_PUBLISH (ELECTION_ID, PUBLISH_TIMESTAMP);
+--
+-- alter table ELECTION_EVENT_PUBLISH
+--     add constraint ELECTION_EVENT_PUBLISH_FK
+--         foreign key (ELECTION_EVENT_ID)
+--             references ELECTION_EVENTS;
+--
+-- alter table ELECTION_EVENT_PUBLISH
+--     add constraint ELECTION_EVENT_PUBLISH_FK2
+--         foreign key (ELECTION_ID)
+--             references ELECTIONS;
+--
+-- alter table ELECTION_LOCALES
+--     add constraint FK1D124B132F4C8461
+--         foreign key (ELECTION_ID)
+--             references ELECTIONS;
+--
+-- alter table H_ELECTION_EVENT
+--     add constraint FKC62CFFABFF7A235
+--         foreign key (ID)
+--             references ELECTION_EVENTS;
+--
+-- create index IDX_IMPVOTHIST_INS_EE_E on IMPORT_VOTER_HISTORY (INSTITUTION_ID, ELECTION_EVENT_ID, ELECTION_ID);
+--
+-- alter table IMPORT_VOTER_HISTORY
+--     add constraint IMP_VOTER_HIST_USER_ID_FK
+--         foreign key (USER_ID)
+--             references USERS;
+--
+-- alter table IMPORT_VOTER_HISTORY
+--     add constraint IMP_VOTER_HIST_ELECTION_EV_FK
+--         foreign key (ELECTION_EVENT_ID)
+--             references ELECTION_EVENTS
+--             on delete cascade;
+--
+-- alter table IMPORT_VOTER_HISTORY
+--     add constraint IMP_VOTER_HIST_ELECTION_FK
+--         foreign key (ELECTION_ID)
+--             references ELECTIONS
+--             on delete cascade;
+--
+-- alter table IMPORT_VOTER_HISTORY
+--     add constraint IMP_VOTER_HIST_INSTITUTION_FK
+--         foreign key (INSTITUTION_ID)
+--             references INSTITUTIONS
+--             on delete cascade;
+--
+-- alter table INSTITUTIONS
+--     add constraint INSTITUTIONS_WELCOME_FK
+--         foreign key (WELCOME_ID)
+--             references MESSAGES;
+--
+-- alter table INSTITUTIONS
+--     add constraint INSTITUTIONS_FOOTER_FK
+--         foreign key (FOOTER_ID)
+--             references MESSAGES;
+--
+-- alter table INSTITUTION_LOCALES
+--     add constraint FKF95D119295B6E813
+--         foreign key (INSTITUTION_ID)
+--             references INSTITUTIONS;
+--
+-- alter table LIST_ANSWERS
+--     add constraint FK1D1115B4874D27E0
+--         foreign key (ID)
+--             references ANSWERS;
+--
+-- alter table LOGIN_CONFIGURATION
+--     add constraint FK_LOGINCONF_PASSWORD
+--         foreign key (PASSWORD_ID)
+--             references MESSAGES;
+--
+-- alter table LOGIN_CONFIGURATION
+--     add constraint FK_LOGINCONF_USERNAME
+--         foreign key (USERNAME_ID)
+--             references MESSAGES;
+--
+-- alter table LOGIN_CONFIGURATION
+--     add constraint FK_LOGINCONF_PIN
+--         foreign key (PIN_ID)
+--             references MESSAGES;
+--
+-- alter table LOGIN_CONFIGURATION
+--     add constraint FK_LOGINCONF_INSTITUTION
+--         foreign key (INSTITUTION_ID)
+--             references INSTITUTIONS;
+--
+-- create index MIXINGS_ELECTION on MIXINGS (ELECTION_ID);
+--
+-- alter table MIXINGS
+--     add constraint MIX_ELECTION_FK
+--         foreign key (ELECTION_ID)
+--             references ELECTIONS
+--             on delete cascade;
+--
+-- alter table MIXINGS
+--     add constraint FK_MIXING_OPERATIONAL_EVENTS
+--         foreign key (OPERATIONAL_EVENT_ID)
+--             references OPERATIONAL_EVENTS
+--             on delete cascade;
+--
+-- create index IDX_OPEV_ELECTION_EVENT on OPERATIONAL_EVENTS (ELECTION_EVENT_ID);
+--
+-- alter table OPERATIONAL_EVENTS
+--     add constraint OP_EVENT_ELECTION_EVENT_FK
+--         foreign key (ELECTION_EVENT_ID)
+--             references ELECTION_EVENTS
+--             on delete cascade;
+--
+-- create index QUESTIONS_ELECTION on QUESTIONS (ELECTION_ID);
+--
+-- alter table QUESTIONS
+--     add constraint QUESTION_BLANK_VOTE_MSG_FK
+--         foreign key (CUSTOM_BLANK_VOTE_MESSAGE_ID)
+--             references MESSAGES;
+--
+-- alter table QUESTIONS
+--     add constraint QUESTION_TEXT_FK
+--         foreign key (TEXT_ID)
+--             references MESSAGES;
+--
+-- alter table QUESTIONS
+--     add constraint QUESTION_ACCLAMATIONTEXT_FK
+--         foreign key (ACCLAMATIONTEXT_ID)
+--             references MESSAGES;
+--
+-- alter table QUESTIONS
+--     add constraint QUESTION_ADDITIONAL_INFO_FK
+--         foreign key (ADDITIONAL_INFORMATION_ID)
+--             references MESSAGES;
+--
+-- alter table QUESTIONS
+--     add constraint QUESTION_DESCRIPTION_FK
+--         foreign key (DESCRIPTION_ID)
+--             references MESSAGES;
+--
+-- alter table QUESTIONS
+--     add constraint QUESTION_ELECTION_FK
+--         foreign key (ELECTION_ID)
+--             references ELECTIONS;
+--
+-- alter table QUESTIONS
+--     add constraint QUESTION_TITLE_FK
+--         foreign key (TITLE_ID)
+--             references MESSAGES;
+--
+-- alter table QUESTIONS_AREAS
+--     add constraint FKED2BA7D46E6B7B61
+--         foreign key (AREA_ID)
+--             references AREAS;
+--
+-- alter table QUESTIONS_AREAS
+--     add constraint QUESTION_AREAS_FK
+--         foreign key (QUESTION_ID)
+--             references QUESTIONS;
+--
+-- create index RECEIPT_OUTPUT_ELECTION on RECEIPT_OUTPUT (ELECTION_ID);
+--
+-- create index RECEIPT_OUTPUT_MIXING on RECEIPT_OUTPUT (MIXING_ID);
+--
+-- alter table RECEIPT_OUTPUT
+--     add constraint RECEIPT_OUTPUT_MIXING_FK
+--         foreign key (MIXING_ID)
+--             references MIXINGS
+--             on delete cascade;
+--
+-- alter table RECEIPT_OUTPUT
+--     add constraint RECEIPT_OUTPUT_ELECTION_FK
+--         foreign key (ELECTION_ID)
+--             references ELECTIONS
+--             on delete cascade;
+--
+-- alter table ROLES_PERMISSIONS
+--     add constraint FKF3A579C216B91DFD
+--         foreign key (ROLE_ID)
+--             references ROLES;
+--
+-- alter table ROLES_PERMISSIONS
+--     add constraint FKF3A579C2B391357F
+--         foreign key (PERMISSION_ID)
+--             references PERMISSIONS;
+--
+-- create index SM_EVC_INDEX on SECURE_MESSAGES (ELECTION_ID, VOTER_ID, CREATION_DATE);
+--
+-- create index SM_VOTER_ELECTION_INDEX on SECURE_MESSAGES (VOTER_ID, ELECTION_ID);
+--
+-- create index SM_CREATION_ELECTION_INDEX on SECURE_MESSAGES (CREATION_DATE, ELECTION_ID);
+--
+-- create index SM_ID_VOTER_ELECTION on SECURE_MESSAGES (ID, VOTER_ID, ELECTION_ID);
+--
+-- create index SM_ELECTION_INDEX on SECURE_MESSAGES (ELECTION_ID);
+--
+-- alter table SECURE_MESSAGES
+--     add constraint SECURE_MESSAGE_USER_FK
+--         foreign key (VOTER_ID)
+--             references VOTERS;
+--
+-- alter table SECURE_MESSAGES
+--     add constraint SECURE_MESSAGE_ELECTION_FK
+--         foreign key (ELECTION_ID)
+--             references ELECTIONS
+--             on delete cascade;
+--
+-- create index TALLY_OUTPUT_ELECTION on TALLY_OUTPUT (ELECTION_ID);
+--
+-- create index TALLY_OUTPUT_MIXING on TALLY_OUTPUT (MIXING_ID);
+--
+-- alter table TALLY_OUTPUT
+--     add constraint TALLY_OUTPUT_EML_MIXING_FK
+--         foreign key (MIXING_ID)
+--             references MIXINGS
+--             on delete cascade;
+--
+-- alter table TALLY_OUTPUT
+--     add constraint TALLY_OUTPUT_EML_ELECTION_FK
+--         foreign key (ELECTION_ID)
+--             references ELECTIONS
+--             on delete cascade;
+--
+-- create index TALLY_OUTPUT_JSON_MIXING on TALLY_OUTPUT_JSON (MIXING_ID);
+--
+-- create index TALLY_OUTPUT_JSON_ELECTION on TALLY_OUTPUT_JSON (ELECTION_ID);
+--
+-- alter table TALLY_OUTPUT_JSON
+--     add constraint TALLY_OUT_JSON_EML_MIX_FK
+--         foreign key (MIXING_ID)
+--             references MIXINGS
+--             on delete cascade;
+--
+-- alter table TALLY_OUTPUT_JSON
+--     add constraint TALLY_OUT_JSON_EML_EL_FK
+--         foreign key (ELECTION_ID)
+--             references ELECTIONS
+--             on delete cascade;
+--
+-- create index TO_REPORT_TO on TALLY_OUTPUT_REPORT (TALLY_OUTPUT_ID);
+--
+-- alter table TALLY_OUTPUT_REPORT
+--     add constraint TO_REPORT_TO_FK
+--         foreign key (TALLY_OUTPUT_ID)
+--             references TALLY_OUTPUT
+--             on delete cascade;
+--
+-- alter table TEXT_ANSWERS
+--     add constraint ANSWER_PROFILE_TEXT_FK
+--         foreign key (PROFILE_TEXT_ID)
+--             references MESSAGES;
+--
+-- alter table TEXT_ANSWERS
+--     add constraint FKCC7AAB43874D27E0
+--         foreign key (ID)
+--             references ANSWERS;
+--
+-- create index IDX_UVE_ELECTIONVOTER on UNAUTHORIZED_ELECTION_VOTERS (VOTER_ID, ELECTION_ID);
+--
+-- alter table UNAUTHORIZED_ELECTION_VOTERS
+--     add constraint FK_UEV_VOTER
+--         foreign key (VOTER_ID)
+--             references VOTERS;
+--
+-- alter table UNAUTHORIZED_ELECTION_VOTERS
+--     add constraint FK_UEV_ELECTION
+--         foreign key (ELECTION_ID)
+--             references ELECTIONS;
+--
+-- create index USER_ACTIVE_INDEX on USERS (ACTIVE);
+--
+-- create index USER_INSTITUTION_INDEX on USERS (INSTITUTION_ID);
+--
+-- create index USER_INSACT_INDEX on USERS (ACTIVE, INSTITUTION_ID);
+--
+-- alter table USERS
+--     add constraint USER_CERTIFICATE_FK
+--         foreign key (CERTIFICATE_ID)
+--             references ADVANCED_CERTIFICATES;
+--
+-- alter table USERS
+--     add constraint USER_ELECTION_EVENT_FK
+--         foreign key (ELECTION_EVENT_ID)
+--             references ELECTION_EVENTS;
+--
+-- alter table USERS
+--     add constraint USER_ELECTION_FK
+--         foreign key (ELECTION_ID)
+--             references ELECTIONS;
+--
+-- alter table USERS
+--     add constraint USER_INSTITUTION_FK
+--         foreign key (INSTITUTION_ID)
+--             references INSTITUTIONS;
+--
+-- alter table USER_LOGIN_ATTEMPTS
+--     add constraint VOTER_ID_FK
+--         foreign key (VOTER_ID)
+--             references VOTERS;
+--
+-- alter table VM_ELECTION_EVENT
+--     add constraint FK4716E95CFF7A235
+--         foreign key (ID)
+--             references ELECTION_EVENTS;
+--
+-- create index VOTERS_INST_LOGIN_INDEX on VOTERS (INSTITUTION_ID, LOGIN);
+--
+-- create index VOTERS_INSTITUTION_INDEX on VOTERS (INSTITUTION_ID);
+--
+-- create index VOTERS_ACTIVE_INST_INDEX on VOTERS (ACTIVE, INSTITUTION_ID);
+--
+-- create index VOTERS_ID_CERT_APIKEY on VOTERS (ID, CERTIFICATE_ID, API_KEY_ID);
+--
+-- alter table VOTERS
+--     add constraint VOTER_CERTIFICATE_FK
+--         foreign key (CERTIFICATE_ID)
+--             references ADVANCED_CERTIFICATES;
+--
+-- alter table VOTERS
+--     add constraint VOTER_AREA_FK
+--         foreign key (AREA_ID)
+--             references AREAS;
+--
+-- alter table VOTERS
+--     add constraint FK974142ABEE522DAC
+--         foreign key (API_KEY_ID)
+--             references API_KEYS;
+--
+-- alter table VOTERS
+--     add constraint VOTER_INSTITUTION_FK
+--         foreign key (INSTITUTION_ID)
+--             references INSTITUTIONS;
+--
+-- alter table VOTERS_TOKENS
+--     add constraint VOTER_TOKEN_FK
+--         foreign key (VOTER_ID)
+--             references VOTERS;
+--
+-- create index WRITE_INS_OUTPUT_MIXING on WRITE_INS_OUTPUT (MIXING_ID);
+--
+-- create index WRITE_INS_OUTPUT_ELECTION on WRITE_INS_OUTPUT (ELECTION_ID);
+--
+-- alter table WRITE_INS_OUTPUT
+--     add constraint WRITE_INS_OUTPUT_MIXING_FK
+--         foreign key (MIXING_ID)
+--             references MIXINGS
+--             on delete cascade;
+--
+-- alter table WRITE_INS_OUTPUT
+--     add constraint WRITE_INS_OUTPUT_ELECTION_FK
+--         foreign key (ELECTION_ID)
+--             references ELECTIONS
+--             on delete cascade;
+--
+-- alter table WRITE_IN_ANSWERS
+--     add constraint FKCA7AF7BB874D27E0
+--         foreign key (ID)
+--             references ANSWERS;
+--
+-- create sequence seq_scytl_ids;
+
