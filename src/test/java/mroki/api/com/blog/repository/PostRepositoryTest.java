@@ -1,14 +1,12 @@
 package mroki.api.com.blog.repository;
 
 import mroki.api.com.blog.dto.request.GetPostHomePageRequest;
-import mroki.api.com.blog.dto.request.CommonRequest;
-import mroki.api.com.blog.repository.contraints.TestConstraint;
+import mroki.api.com.blog.contraints.TestConstraint;
 import mroki.api.com.blog.repository.projection.PostHomePageProjection;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.util.Assert;
 
 import java.util.List;
 

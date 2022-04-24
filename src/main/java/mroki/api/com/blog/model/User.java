@@ -35,8 +35,8 @@ public class User {
 	private String lastName;
 	private String email;
     private String gender;
-    private Boolean isVerifiedEmail;
-    private Boolean isActivate;
+    private Boolean isVerifiedEmail = false;
+    private Boolean isActivate = true;
     private LocalDate dateOfBirth;
 
     @ManyToOne

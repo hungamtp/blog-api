@@ -4,6 +4,7 @@ package mroki.api.com.blog.service.impl;
 import lombok.AllArgsConstructor;
 import mroki.api.com.blog.constants.EntityName;
 import mroki.api.com.blog.constants.ErrorCode;
+import mroki.api.com.blog.constants.FieldName;
 import mroki.api.com.blog.dto.request.JwtResponse;
 import mroki.api.com.blog.dto.request.LoginRequest;
 import mroki.api.com.blog.dto.request.SignUpRequest;
@@ -63,15 +64,15 @@ public class AuthServiceImpl implements AuthService {
     public JwtResponse signUp(SignUpRequest signUpRequest) {
         Optional<User> user = userRepository.findByUsername(signUpRequest.getUsername());
         if(user.isPresent()){
-            throw new IllegalStateException(EntityName.USER + ErrorCode.EXIST);
+            throw new IllegalStateException(FieldName.USERNAME + ErrorCode.EXIST);
         }
         user = userRepository.findByEmail(signUpRequest.getEmail());
         if(user.isPresent()){
-            throw new IllegalStateException(EntityName.USER + ErrorCode.EXIST);
+            throw new IllegalStateException(FieldName.EMAIL + ErrorCode.EXIST);
         }
         User savedUser = modelMapper.map(signUpRequest , User.class);
         savedUser.setPassword(encoder.encode(signUpRequest.getPassword()));
-        savedUser.setRole(new Role(1L));
+        savedUser.setRole(roleRepository.getById(1L));
 
         userRepository.save(savedUser);
 

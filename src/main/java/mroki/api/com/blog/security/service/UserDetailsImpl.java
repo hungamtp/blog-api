@@ -19,24 +19,24 @@ public class UserDetailsImpl implements UserDetails {
     private String username;
     private String password;
     private String firstName;
-    private  String lastName;
+    private String lastName;
     private LocalDate dateOfBirth;
     private String gender;
     private String role;
     private Boolean isActivate;
 
     public static UserDetailsImpl build(User user) {
-		return new UserDetailsImpl(user.getId(), user.getUsername(),
+        return new UserDetailsImpl(user.getId(), user.getUsername(),
             user.getPassword(), user.getFirstName(), user.getLastName(),
             user.getDateOfBirth(), user.getGender(),
             user.getRole().getName(), user.getIsActivate()
         );
-	}
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role);
-		return Collections.singletonList(authority);
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role);
+        return Collections.singletonList(authority);
     }
 
     @Override
