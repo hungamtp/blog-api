@@ -1,0 +1,65 @@
+{
+	"info": {
+		"_postman_id": "7fdaabd3-d851-4117-a81e-4d5ec24d230c",
+		"name": "Auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\" :\"wedwedcw\",\n    \"password\" : \"hunghung\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/{{CONTEXT-PATH}}/auth/login",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"{{CONTEXT-PATH}}",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"hungamtp6\",\n    \"email\":\"hungamtp7@gmail.com\",\n    \"password\":\"hunghung\",\n    \"firstname\" :\"Hung\",\n    \"lastname\":\"Nguyen\",\n    \"gender\":\"Male\",\n    \"dateOfBirth\" :\"2020-12-12\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/{{CONTEXT-PATH}}/auth/signup",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"{{CONTEXT-PATH}}",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
