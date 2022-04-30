@@ -7,6 +7,6 @@ import mroki.api.com.blog.repository.projection.PostHomePageProjection;
 import java.util.List;
 
 public interface PostRepositoryCustom {
-    List<PostHomePageProjection> findPostsCustom(GetPostHomePageRequest request);
+    List<PostHomePageProjection> findAllPost(GetPostHomePageRequest request);
     List<PostHomePageProjection> findPostsCustomForTest(GetPostHomePageRequest request);
 }

@@ -6,10 +6,16 @@ import mroki.api.com.blog.model.Comment;
 import java.time.LocalDate;
 import java.util.List;
 
-@Value
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class PostHomePageProjection {
-    Long id;
-    String title;
-    LocalDate createdAt;
-    Double rate;
+    private Long id;
+    private String title;
+    private LocalDate createdAt;
+    private Long countLike;
+//    private
+
 }

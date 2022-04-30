@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -32,13 +34,19 @@ public class Post {
     private String content;
     private LocalDate createdAt;
     private LocalDate editedAt;
-    private Boolean publish;
-    private Boolean isSlide;
+    private Boolean publish = false;
+    private Boolean isSlide = false;
+
     @Lob
+    @Basic(fetch = FetchType.EAGER)
+    @Column(name = "image")
     private byte[] image;
     @ManyToMany
     @JoinTable(name = "product_tag")
     private List<Tag> tags;
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<UserLikedPost> userLikedPosts;
 }
